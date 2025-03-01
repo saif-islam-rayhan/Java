@@ -1,0 +1,36 @@
+//Mobile_user class
+package mobile;
+
+public abstract class Mobile_user {
+    abstract void sendMessage();
+}
+//Rohim class
+package mobile;
+
+public class Rohim extends Mobile_user{
+    @Override
+    void sendMessage() {
+        System.out.println("Hi I am Rohim");
+    }
+}
+//karim class
+package mobile;
+
+public class Karim extends Mobile_user{
+    @Override
+    void sendMessage() {
+        System.out.println("Hi,I am karim");
+    }
+}
+//Main class
+package mobile;
+
+public class Main {
+    public static void main(String[] args) {
+    Mobile_user mu;
+        mu=new Karim();
+    mu=new Rohim();
+
+    mu.sendMessage();
+    }
+}
