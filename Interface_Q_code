@@ -1,0 +1,32 @@
+(b) Let there be a class A which has a member function showA() which displays “49 intake!!! Best of Luck for your exam!!!”. Class C and class D inherit both class A and class B. Will there be any problem if we call showA() function from the object of class E? If yes, then how can we solve it? Write down the solved program.
+Solution:
+Java does not support multiple inheritance of classes, so class C extends A, B and then class E extends C, D will not compile. Instead, we use interfaces and disambiguate any default-method conflict explicitly.
+
+
+Code:
+
+interface A {
+    default void showA() {
+        System.out.println("49 intake!!!  Best of Luck for your exam!!!");
+    }
+}
+interface B {
+    default void showB() {
+        System.out.println("Hello from B");
+    }
+
+class E implements A, B {
+    @Override
+    public void showA() {
+        // explicitly call A's default
+        A.super.showA();
+    }
+}
+
+public class DiamondDemo {
+    public static void main(String[] args) {
+        E e = new E();
+        e.showA();   // prints the A-message
+        e.showB();   // prints B-message
+    }
+}
