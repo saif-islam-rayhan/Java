@@ -1,0 +1,183 @@
+// JavaSolutions.java
+
+/*
+ * Question 1(a):
+ * Implement a class Car that has a static variable count and a static method getCount().
+ */
+class Car {
+    private static int count = 0;
+
+    public Car() {
+        count++;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+}
+
+/*
+ * Question 1(b):
+ * There is a class called BankUtils that contains a method that prints “Welcome to the bank”.
+ * This class should not be extended by any other class.
+ * Inside the BankAccount class, there's a method calculateInterest() that provides the logic for calculating interest.
+ * This method should not be overridden by any subclass.
+ * Each BankAccount object should have a unique account number that cannot be changed once it's set during object creation.
+ * The Transaction class should have a method processTransaction() that is only accessible within the same package (default access).
+ */
+final class BankUtils {
+    public static void printWelcome() {
+        System.out.println("Welcome to the bank");
+    }
+}
+
+class BankAccount {
+    private final String accountNumber;
+    private double balance;
+    private double rate;   // annual interest rate, e.g. 0.05 for 5%
+    private int years;     // time period in years
+
+    public BankAccount(String acctNo, double balance, double rate, int years) {
+        this.accountNumber = acctNo;
+        this.balance = balance;
+        this.rate = rate;
+        this.years = years;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public final double calculateInterest() {
+        // Simple interest: principal * rate * time
+        return balance * rate * years;
+    }
+}
+
+class Transaction {
+    // default (package-private) access
+    void processTransaction() {
+        System.out.println("Processing transaction...");
+    }
+}
+
+/*
+ * Question 2(a):
+ * Create a class named ElectricCar that both extends an abstract class and implements two interfaces.
+ * The abstract class Vehicle should contain abstract methods start() and stop().
+ * The first interface Electric should define a method chargeBattery().
+ * The second interface Autonomous should define a method enableAutoPilot().
+ */
+abstract class Vehicle {
+    public abstract void start();
+    public abstract void stop();
+}
+
+interface Electric {
+    void chargeBattery();
+}
+
+interface Autonomous {
+    void enableAutoPilot();
+}
+
+class ElectricCar extends Vehicle implements Electric, Autonomous {
+    @Override
+    public void start() {
+        System.out.println("ElectricCar starting silently...");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("ElectricCar stopping.");
+    }
+
+    @Override
+    public void chargeBattery() {
+        System.out.println("Charging battery...");
+    }
+
+    @Override
+    public void enableAutoPilot() {
+        System.out.println("Autopilot enabled.");
+    }
+}
+
+/*
+ * Question 2(b):
+ * There is a top-level interface Appliance that provides a method for turning an appliance on or off.
+ * The KitchenAppliance interface extends Appliance and adds a method for setting the temperature.
+ * The EntertainmentAppliance interface extends Appliance and adds a method for adjusting volume.
+ * The class SmartDevice should implement both KitchenAppliance and EntertainmentAppliance.
+ */
+interface Appliance {
+    void turnOn();
+    void turnOff();
+}
+
+interface KitchenAppliance extends Appliance {
+    void setTemperature(int temp);
+}
+
+interface EntertainmentAppliance extends Appliance {
+    void setVolume(int vol);
+}
+
+class SmartDevice implements KitchenAppliance, EntertainmentAppliance {
+    @Override
+    public void turnOn() {
+        System.out.println("SmartDevice turning on.");
+    }
+
+    @Override
+    public void turnOff() {
+        System.out.println("SmartDevice turning off.");
+    }
+
+    @Override
+    public void setTemperature(int temp) {
+        System.out.println("Setting temperature to " + temp + "°C.");
+    }
+
+    @Override
+    public void setVolume(int vol) {
+        System.out.println("Setting volume to " + vol + ".");
+    }
+}
+
+/*
+ * Demo class to exercise all solutions
+ */
+public class JavaSolutions {
+    public static void main(String[] args) {
+        // Q1(a) Car count
+        System.out.println("Car count before creating instances: " + Car.getCount());
+        new Car();
+        new Car();
+        System.out.println("Car count after creating 2 cars:  " + Car.getCount());
+        System.out.println();
+
+        // Q1(b) BankUtils, BankAccount, Transaction
+        BankUtils.printWelcome();
+        BankAccount acct = new BankAccount("ACC123456", 1000.0, 0.05, 2);
+        System.out.println("Account #" + acct.getAccountNumber() +
+                           " interest for period = " + acct.calculateInterest());
+        new Transaction().processTransaction();
+        System.out.println();
+
+        // Q2(a) ElectricCar
+        ElectricCar ec = new ElectricCar();
+        ec.start();
+        ec.chargeBattery();
+        ec.enableAutoPilot();
+        ec.stop();
+        System.out.println();
+
+        // Q2(b) SmartDevice
+        SmartDevice sd = new SmartDevice();
+        sd.turnOn();
+        sd.setTemperature(22);
+        sd.setVolume(7);
+        sd.turnOff();
+    }
+}
