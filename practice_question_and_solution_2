@@ -1,0 +1,104 @@
+// ==========================
+// Question (a):
+// (In package mathoperations)  
+// There is an interface MathOperations with an abstract method  
+//     Add(int a, int b)  
+// (In package advancedoperations)  
+// Create another interface AdvancedMathOperations that  
+//     • extends MathOperations  
+//     • adds two abstract methods:  
+//         Subtract(int a, int b)  
+//         Power(int base, int exponent)  
+// (In package implementations)  
+// 1. Create class BasicMath that implements MathOperations.  
+//    • It must have a concrete method Multiply(int a, int b).  
+// 2. In the same package, create class AdvancedMath that implements AdvancedMathOperations.  
+//    • It must also implement a method Divide(int a, int b) that performs integer division  
+//      and checks for division by zero.
+// ==========================
+
+// File: mathoperations/MathOperations.java
+package mathoperations;
+
+public interface MathOperations {
+    int Add(int a, int b);
+}
+
+// File: advancedoperations/AdvancedMathOperations.java
+package advancedoperations;
+
+import mathoperations.MathOperations;
+
+public interface AdvancedMathOperations extends MathOperations {
+    int Subtract(int a, int b);
+    int Power(int base, int exponent);
+}
+
+// File: implementations/BasicMath.java
+package implementations;
+
+import mathoperations.MathOperations;
+
+public class BasicMath implements MathOperations {
+    @Override
+    public int Add(int a, int b) {
+        return a + b;
+    }
+
+    // concrete multiplication method
+    public int Multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+// File: implementations/AdvancedMath.java
+package implementations;
+
+import advancedoperations.AdvancedMathOperations;
+
+public class AdvancedMath implements AdvancedMathOperations {
+    @Override
+    public int Add(int a, int b) {
+        return a + b;
+    }
+
+    @Override
+    public int Subtract(int a, int b) {
+        return a - b;
+    }
+
+    @Override
+    public int Power(int base, int exponent) {
+        int result = 1;
+        for (int i = 0; i < exponent; i++) {
+            result *= base;
+        }
+        return result;
+    }
+
+    // division with zero-check
+    public int Divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by zero");
+        }
+        return a / b;
+    }
+}
+
+
+// ==========================
+// Question (b):
+// How can you declare “PI” as a constant for the following code?
+//
+// public class MathConstants {
+//     public double PI = 3.14159;
+// }
+// ==========================
+
+// File: implementations/MathConstants.java
+package implementations;
+
+public class MathConstants {
+    // make PI a true constant:
+    public static final double PI = 3.14159;
+}
