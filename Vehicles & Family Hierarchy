@@ -1,0 +1,45 @@
+Vehicles & Family Hierarchy(a) Car and Bus are different types of vehicles. Car has properties speed and no_of_passengers. The Bus also has the same properties. Both the vehicle’s speed depends on its engine, and passengers depend on the number of seats given when a Car or a Bus object is created. You are assigned the task of comparing the two types of vehicles by their speed. Translate the scenario to a Java program by creating the classes and comparing the speed of two objects of the classes Bus and Car.
+Solution:
+
+
+class Car {
+    private double speed;
+    private int passengers;
+
+    public Car(double enginePower, int seats) {
+        this.speed = enginePower * 10;
+        this.passengers = seats;
+    }
+    public double getSpeed() { return speed; }
+    public int getPassengers() { return passengers; }
+}
+
+class Bus {
+    private double speed;
+    private int passengers;
+
+    public Bus(double enginePower, int seats) {
+        this.speed = enginePower * 5;
+        this.passengers = seats;
+    }
+    public double getSpeed() { return speed; }
+    public int getPassengers() { return passengers; }
+}
+
+public class VehicleCompare {
+    public static void main(String[] args) {
+        Car car = new Car(2.0, 4);
+        Bus bus = new Bus(5.0, 40);
+
+        System.out.printf("Car speed: %.1f, passengers: %d%n", car.getSpeed(), car.getPassengers());
+        System.out.printf("Bus speed: %.1f, passengers: %d%n", bus.getSpeed(), bus.getPassengers());
+
+        if (car.getSpeed() > bus.getSpeed()) {
+            System.out.println("Car is faster.");
+        } else if (car.getSpeed() < bus.getSpeed()) {
+            System.out.println("Bus is faster.");
+        } else {
+            System.out.println("Both have the same speed.");
+        }
+    }
+}
