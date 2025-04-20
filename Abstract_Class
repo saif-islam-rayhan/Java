@@ -1,0 +1,100 @@
+(a) Create an abstract class named Store. Store will have one non‑abstract function showItem() and two abstract (pure‑virtual) functions get_price() and display_info(). Create two derived classes Bookstore and Ricestore. In the main() function, design Store class usage in such a way that implements the idea of abstraction and runtime polymorphism.
+
+
+
+// Main.java
+abstract class Store {
+    public void showItem(String name) {
+        System.out.println("Item: " + name);
+    }
+    public abstract double getPrice();
+    public abstract void displayInfo();
+}
+
+class Bookstore extends Store {
+    private String title;
+    private double price;
+    public Bookstore(String title, double price) {
+        this.title = title;
+        this.price = price;
+    }
+    @Override
+    public double getPrice() {
+        return price;
+    }
+    @Override
+    public void displayInfo() {
+        System.out.printf("Book: %s%nPrice: $%.2f%n%n", title, price);
+    }
+}
+
+class Ricestore extends Store {
+    private String variety;
+    private double unitPrice, weight;
+    public Ricestore(String variety, double unitPrice, double weight) {
+        this.variety = variety;
+        this.unitPrice = unitPrice;
+        this.weight = weight;
+    }
+    @Override
+    public double getPrice() {
+        return unitPrice * weight;
+    }
+    @Override
+    public void displayInfo() {
+        System.out.printf(
+          "Rice: %s%nWeight: %.2f kg%nUnit Price: $%.2f%nTotal: $%.2f%n%n",
+          variety, weight, unitPrice, getPrice()
+        );
+    }
+}
+
+abstract class Shape {
+    protected double x, y;
+    public void setData(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    public abstract void displayArea();
+}
+
+class Triangle extends Shape {
+    @Override
+    public void displayArea() {
+        System.out.println("Triangle area = " + (0.5 * x * y));
+    }
+}
+
+class Rectangle extends Shape {
+    @Override
+    public void displayArea() {
+        System.out.println("Rectangle area = " + (x * y));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // --- Part (a): Store abstraction ---
+        System.out.println("=== Part A: Store Demo ===");
+        Store[] stores = {
+            new Bookstore("Effective Java", 45.00),
+            new Ricestore("Basmati", 2.50, 4.0)
+        };
+        for (Store s : stores) {
+            s.showItem(s instanceof Bookstore ? "Book" : "Rice");
+            s.displayInfo();
+        }
+
+        // --- Part (b): shape polymorphism ---
+        System.out.println("=== Part B: Shape Demo ===");
+        Shape sh;
+
+        sh = new Triangle();
+        sh.setData(3, 4);
+        sh.displayArea();   // Triangle
+
+        sh = new Rectangle();
+        sh.setData(3, 4);
+        sh.displayArea();   // Rectangle
+    }
+}
