@@ -1,0 +1,101 @@
+b) Create a base class called shape which has two double‑type properties and a function setdata() which is used to set the values of those two properties. There should be another member function display_area() in shape to compute and display the area of figures. Derive two specific classes called triangle and rectangle from the base shape. Use these three classes to implement the idea of dynamic method dispatch.
+
+
+// EasyCombined.java
+
+// Part (a): Store abstraction
+abstract class Store {
+    void showItem(String name) {
+        System.out.println("Item: " + name);
+    }
+    abstract double getPrice();
+    abstract void displayInfo();
+}
+
+class BookStore extends Store {
+    String title;
+    double price;
+    BookStore(String title, double price) {
+        this.title = title;
+        this.price = price;
+    }
+    @Override
+    double getPrice() {
+        return price;
+    }
+    @Override
+    void displayInfo() {
+        System.out.println("Book: " + title);
+        System.out.println("Price: $" + price);
+        System.out.println();
+    }
+}
+
+class RiceStore extends Store {
+    String variety;
+    double unitPrice, weight;
+    RiceStore(String variety, double unitPrice, double weight) {
+        this.variety = variety;
+        this.unitPrice = unitPrice;
+        this.weight = weight;
+    }
+    @Override
+    double getPrice() {
+        return unitPrice * weight;
+    }
+    @Override
+    void displayInfo() {
+        System.out.println("Rice: " + variety);
+        System.out.println("Weight: " + weight + " kg");
+        System.out.println("Total Price: $" + getPrice());
+        System.out.println();
+    }
+}
+
+// Part (b): Shape polymorphism
+abstract class Shape {
+    double x, y;
+    void setData(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    abstract void displayArea();
+}
+
+class Triangle extends Shape {
+    @Override
+    void displayArea() {
+        System.out.println("Triangle area = " + (0.5 * x * y));
+    }
+}
+
+class Rectangle extends Shape {
+    @Override
+    void displayArea() {
+        System.out.println("Rectangle area = " + (x * y));
+    }
+}
+
+// Demo both in one main
+public class EasyCombined {
+    public static void main(String[] args) {
+        // --- Part (a) ---
+        Store[] shops = {
+            new BookStore("Effective Java", 40.0),
+            new RiceStore("Basmati", 2.5, 3.0)
+        };
+        for (Store s : shops) {
+            s.showItem(s instanceof BookStore ? "Book" : "Rice");
+            s.displayInfo();
+        }
+
+        // --- Part (b) ---
+        Shape tri = new Triangle();
+        tri.setData(3, 4);
+        tri.displayArea();
+
+        Shape rect = new Rectangle();
+        rect.setData(3, 4);
+        rect.displayArea();
+    }
+}
