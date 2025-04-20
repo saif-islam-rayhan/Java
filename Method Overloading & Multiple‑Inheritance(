@@ -1,0 +1,27 @@
+1. Method Overloading & Multiple‑Inheritance(a) Explain the concept of method overloading with an appropriate example.
+Solution:
+Method overloading in Java allows multiple methods in the same class to share the same name, as long as their parameter lists differ (in number, type, or order). The compiler determines which method to invoke based on the arguments provided at the call site.
+Example:
+class OverloadExample {
+    // 1) sums two ints
+    public int sum(int a, int b) {
+        return a + b;
+    }
+
+    // 2) sums three ints
+    public int sum(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // 3) sums two doubles
+    public double sum(double a, double b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        OverloadExample ex = new OverloadExample();
+        System.out.println(ex.sum(2, 3));       // 5
+        System.out.println(ex.sum(2, 3, 4));    // 9
+        System.out.println(ex.sum(2.5, 3.5));   // 6.0
+    }
+}
