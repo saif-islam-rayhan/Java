@@ -1,0 +1,37 @@
+(b) Write a program using three classes named Grandfather, Father and Son where the constructor of each class takes one integer Age and one string Name value as argument. All the constructors show the Name and Age. Complete the program considering the following case:
+i) Father inherits Grandfather and Son inherits Father. Now show the output for the above case. Also implement super and this keyword in the above program.
+
+Solution:
+class Grandfather {
+    protected String name;
+    protected int age;
+
+    public Grandfather(int age, String name) {
+        this.age = age;
+        this.name = name;
+        System.out.printf("Grandfather – Name: %s, Age: %d%n", name, age);
+    }
+}
+
+class Father extends Grandfather {
+    public Father(int age, String name) {
+        super(age, name);
+        System.out.printf("Father       – Name: %s, Age: %d%n", this.name, this.age);
+    }
+}
+
+class Son extends Father {
+    public Son(int age, String name) {
+        super(age, name);
+        showSelf();
+    }
+    private void showSelf() {
+        System.out.printf("Son          – Name: %s, Age: %d%n", this.name, this.age);
+    }
+}
+
+public class FamilyDemo {
+    public static void main(String[] args) {
+        new Son(25, "John");
+    }
+}
